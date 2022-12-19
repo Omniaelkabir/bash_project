@@ -6,23 +6,17 @@ read -p "Enter Table Name to Drop " table_name
 while [ -z $table_name ]
     do
             echo "Empty Value Please enter vaild input"
-            read $table_name
+            read -p "Pealse enter Table Name Again" table_name
+            table_name_number
+            table_name_space
     done
-while [[ $table_name =~ ^[+-]?[0-9]+\.?[0-9]* ]];do
 
-    echo "Can not start with numbers " 
-    read -p "Enter Table Name Again" table_name
-done
-case "$table_name" in  
-     *\ * )
-           
-           table_name="${table_name// /_}"
-        #    echo $table_name
-          ;;
-esac    
+
 while [[ -d $table_name ]];do
     echo "Can't Remove Folder Please Enter Right File"
     read -p "Pealse enter Table Name Again" table_name
+    table_name_number
+    table_name_space
 done    
 if [ -e $table_name ];then
     echo "Are you sure you want to delete: \"$table_name\""

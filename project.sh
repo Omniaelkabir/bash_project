@@ -2,6 +2,51 @@
 export LC_COLLATE=C # Terminal Case Sensitive
 shopt -s extglob #import Advanced Regex
 
+database_name_space() {
+
+                case "$database_name" in  
+     *\ * )
+           
+           database_name="${database_name// /_}"
+        #    echo $database_name
+          ;;
+esac
+}
+
+table_name_space(){
+
+    case "$table_name" in  
+     *\ * )
+           
+           table_name="${table_name// /_}"
+        #    echo $table_name
+          ;;
+esac    
+}
+
+database_name_number() {
+    while [[ $database_name == [1-9]* ]] || [[ $database_name == *['!'';''.'@\$%^\&*()+-='\'?'/''`'~:,'<''>''['']']* ]];do
+
+        echo "Can not start with numbers " 
+        read -p "Enter DataBase Name Again " database_name
+done
+}
+
+table_name_number(){
+
+    while [[ $table_name == [1-9]* ]] || [[ $table_name == *['!'';''.'@\$%^\&*()+-='\'?'/''`'~:,'<''>''['']']* ]];do
+        echo "Can not start with numbers or special characters " 
+        read -p "Enter table Name Again " table_name
+done
+
+}
+
+
+export -f database_name_space
+export -f table_name_space
+export -f table_name_number
+export -f database_name_number
+
 read -p "Enter Folder Name DB " name
     while [ -z $name ]
     do
@@ -11,6 +56,12 @@ done
     if [ -e $name ];then
             echo "Folder has the same name"
     else 
+            case "$name" in  
+     *\ * )
+           
+           name="${name// /_}"
+          ;;
+esac 
         mkdir $name
         chmod 775 $name
 

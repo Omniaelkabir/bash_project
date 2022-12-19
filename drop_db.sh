@@ -2,22 +2,46 @@
 export LC_COLLATE=C # Terminal Case Sensitive
 shopt -s extglob #import Advanced Regex
 #echo $name
-
+cd $name
 read -p "Enter DataBase Name to Drop " database_name
-    while [ -z $database_name ]
+database_name_number
+database_name_space
+while [ -z $database_name ]
     do
             echo "Empty Value Please inter vaild input"
-            read input
+            read -p "Enter DataBase Name Again" database_name
+            database_name_number
+            database_name_space
 done
-if [[ -f $database_name ]];then
+
+while [[ -f $database_name ]];do
     echo "Can't Remove File Please Enter Right Directory"
-elif [ -e $name/$database_name ];then
+    read -p "Enter DataBase Name Again" database_name
+    database_name_number
+    database_name_space
+done
+
+if [ -e $database_name ];then
+echo "Are you sure you want to delete "$database_name
+select choice in "Yes" "No"
+do
+case $choice in 
+
+    "Yes")
     echo "Starting Remove DataBase"
-    cd $name
     rm -r $database_name
+    echo "Database Successfully Deleted"
+    break;
+    ;;
+
+    "No")
+    echo "Exit"
+    break;
+esac    
+done
+    
     else 
     echo "Can't Find DataBase Folder"
-
     fi
     
     
