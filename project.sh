@@ -2,7 +2,7 @@
 export LC_COLLATE=C # Terminal Case Sensitive
 shopt -s extglob #import Advanced Regex
 
-database_name_space() {
+database_name_space() {   #for space in database files
 
                 case "$database_name" in  
      *\ * )
@@ -13,7 +13,7 @@ database_name_space() {
 esac
 }
 
-table_name_space(){
+table_name_space(){      #for space in tables files
 
     case "$table_name" in  
      *\ * )
@@ -24,16 +24,16 @@ table_name_space(){
 esac    
 }
 
-database_name_number() {
+database_name_number() {  #for snumber and Soecail characters in database files
     while [[ $database_name == [1-9]* ]] || [[ $database_name == *['!'';''.'@\$%^\&*()+-='\'?'/''`'~:,'<''>''['']']* ]];do
 
-        echo "Can not start with numbers " 
+        echo "Can not start with numbers or special characters " 
         read -p "Enter DataBase Name Again " database_name
 done
 }
 
-table_name_number(){
-
+table_name_number(){                      #for snumber and Soecail characters in tables files
+ 
     while [[ $table_name == [1-9]* ]] || [[ $table_name == *['!'';''.'@\$%^\&*()+-='\'?'/''`'~:,'<''>''['']']* ]];do
         echo "Can not start with numbers or special characters " 
         read -p "Enter table Name Again " table_name
@@ -41,13 +41,22 @@ done
 
 }
 
+#export function to other files
 
 export -f database_name_space
 export -f table_name_space
 export -f table_name_number
 export -f database_name_number
 
+#read folder to put database folder in 
+
 read -p "Enter Folder Name DB " name
+            case "$name" in  
+     *\ * )
+           
+           name="${name// /_}"
+          ;;
+esac 
     while [ -z $name ]
     do
             echo "Empty Value Please inter vaild name"
@@ -66,53 +75,30 @@ esac
         chmod 775 $name
 
     fi
+
 export name=$name
 
 
-
-select opt_db in Create_DB List_DB Drop_DB Connect_DB
+#menu to choise from
+select opt_db in Create_DB List_DB Drop_DB Connect_DB Exit
 do
 case $opt_db in 
 "Create_DB" )
-chmod 775 ./create_db.sh
+chmod 775 ./create_db.sh    #change permission to file to enter
 ./create_db.sh;;
 "List_DB" )
 chmod 775 ./list_db.sh
-echo ./list_db.sh;;
+./list_db.sh;;
 "Drop_DB" )
-    chmod 775 ./drop_db.sh
+chmod 775 ./drop_db.sh
  ./drop_db.sh;;
 "Connect_DB" )
 chmod 775 ./connect_db.sh
-./connect_db.sh
+./connect_db.sh;;
+"Exit")
+exit ;;
+* )
+echo "enter valid option"
 esac
 done 
-
-
-# select opt_table in Create_Table List_Table Drop_Table Insert_Table Select_from_Table Delete_from_Table Update_Table
-# do
-# case $opt_table in 
-# "Create_Table" )
-# chmod 775 ./create_tb.sh
-# echo ./create_tb.sh;;
-# "List_Table" )
-# chmod 775 ./list_tb.sh
-# echo ./list_tb.sh;;
-# "Drop_Table" )
-# chmod 775 ./drop_tb.sh
-# echo ./drop_tb.sh ;;
-# "Insert_Table" )
-# chmod 775 ./insert_tb.sh
-# echo ./insert_tb.sh;;
-# "Select_from_Table" )
-# chmod 775 ./select_from_tb.sh
-# echo ./select_from_tb.sh;;
-# "Delete_from_Table" )
-# chmod 775 ./delete_from_tb.sh
-# echo ./delete_from_tb.sh ;;
-# "Update_Table" )
-# chmod 775 ./update_tb.sh
-# echo ./update_tb.sh 
-# esac
-# done
 

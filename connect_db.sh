@@ -2,8 +2,10 @@
 export LC_COLLATE=C # Terminal Case Sensitive
 shopt -s extglob #import Advanced Regex
 cd $name
-read -p "Enter DataBase Name to Connect " database_name
-while [ -z $database_name ]
+read -p "Enter DataBase Name to Connect " database_name   #enter database name and checking for spaces, numbers and special    
+        database_name_number
+        database_name_space
+while [ -z $database_name ]   #database name can not be empty
     do
         echo "Empty Value Please inter vaild input"
         read -p "Pealse enter DataBase Name Again" database_name
@@ -12,22 +14,22 @@ while [ -z $database_name ]
 
     done
 
-while [[ -f $database_name ]];do
+while [[ -f $database_name ]];do  #databbase is folder so can not enter file
     echo "Can't Connect File Please Enter Right Directory "
     read -p "Pealse enter DataBase Name Again" database_name
     database_name_number
     database_name_space
 done    
-if [ -e $database_name ];then
+if [ -e $database_name ];then 
     echo "Starting Connect DataBase "
 export $database_name
     cd $database_name
-    select opt in List_DB Create_Table List_Table Drop_Table Insert_Table Select_from_Table Delete_from_Table Update_Table 
+    
+#menu to choise what option you want to do for database you connect 
+
+select opt in Create_Table List_Table Drop_Table Insert_Table Select_from_Table Delete_from_Table Update_Table Exit
         do
         case $opt in 
-        "List_DB" )
-        chmod 775 ../.././list_db.sh
-        ../.././list_db.sh ;;
         "Create_Table" )
         chmod 775 ../.././create_tb.sh
          ../.././create_tb.sh;;
@@ -41,14 +43,18 @@ export $database_name
         chmod 775 ../.././insert_tb.sh
         ../.././insert_tb.sh;;
         "Select_from_Table" )
-        chmod 775 ./select_from_tb.sh
-        echo ./select_from_tb.sh;;
+        chmod 775 ../.././select_from_tb.sh
+        ../.././select_from_tb.sh;;
         "Delete_from_Table" )
         chmod 775 ./delete_from_tb.sh
         echo ./delete_from_tb.sh ;;
         "Update_Table" )
         chmod 775 ./update_tb.sh
-        echo ./update_tb.sh
+        echo ./update_tb.sh;;
+        "Exit")
+        exit ;;
+        * )
+            echo "enter valid option"
         esac
         done
     else 

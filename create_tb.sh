@@ -3,7 +3,8 @@
 shopt -s extglob #import Advanced Regex
 
  read -p "Enter Table Name to Create " table_name
-
+             table_name_number
+             table_name_space
 while [ -z $table_name  ]
      do
              echo "Empty Value Please inter vaild input"
@@ -24,7 +25,6 @@ while [  -e $table_name  ]
 
 while [ true ];do
 read -p "Enter the number of columns:" col_num
-
 if ! [[ $col_num =~ ^[0-9]+$ ]];then
 echo Column number must be integer number 
 elif [[ $col_num -eq 0 ]];then 
@@ -34,8 +34,10 @@ break;
 fi
 done
 
-line1[0]="id" #line1 for col name
-line2[0]="INTEGER" #line2 for col name data type
+line4[0]="id" #line1 for col name
+line3[0]="INTEGER" #line2 for col name data type
+
+
 typeset -i i=1
 export equal
 while (( $i <= $col_num ))
@@ -49,10 +51,10 @@ do
 elif [[ $col_name == *" "* ]] || [[ $col_name == [1-9]* ]] || [[ $col_name == *['!'';''.'@\$%^\&*()+-='\'?'/''`'~:,'<''>''['']']* ]] ;then
 			echo not a good format
 		else
-	  for col in ${line1[@]}
+	  for col in ${line4[@]}
 		  do
 		  	
-		    if [[ "$col" == $col_name ]]; then
+		    if [[ $col == $col_name ]]; then
 			equal=1
 			echo the column name already exist!
 			break 
@@ -68,19 +70,19 @@ elif [[ $col_name == *" "* ]] || [[ $col_name == [1-9]* ]] || [[ $col_name == *[
 	fi
 
 done
-
+line4[$i]=$col_name
 select data_type in INTEGER STRING
         do
           case $data_type in
 
-               "INTERGER")
+               "INTEGER")
                     
-                  line2[$i]="INTEGER"
+                  line3[$i]="INTEGER"
                     break;
                     ;;
                
                "STRING")
-                      line2[$i]="STRING"
+                      line3[$i]="STRING"
                     break;
                     ;;
                *)
@@ -94,41 +96,73 @@ i=$i+1
 
 done
 
+     primary_key(){
+
+          while [ true ]
+          do
+          
+ 
+          echo "Your table columns are :\n"
+          echo "${line4[@]}"
+
+          echo "Enter your PK column index number "
+          read pk
+               
+               #Check validation of pk index number
+               if [[ $pk =~ ^[0-9]+$ ]]
+               then
+                    
+                    if [[ $pk -lt $col_num ]]
+                    then
+          
+                              echo "The index of Your primary key column  is: " $pk >> $table_name  
+                              echo "---------------------------------" >> $table_name
+                              echo  "Successfully add Primary Key "   
+                              export pk=$pk
+                              break;
+                         
+                    fi
+               else 
+                    echo "\n$pk  index column is not exist ,, try again please!\n"
+
+                    #Calling getPk function 
+                    primary_key
+               fi
+               
+
+          done
+     }
+
+primary_key
 typeset -i i=0
-for var in  ${line1[@]}
+for var in  ${line4[@]}
 do
 if [[ $i == 0 ]];then
-l1=$var
+l3=$var
 else
-l1=$l1:$var
+l3=$l3:$var
 fi
 i=$i+1
 done
-
-echo  $l1 >> $table_name
+echo  $l3 >> $table_name
 typeset -i i=0
 
-for var in  ${line2[@]}
+for var in  ${line3[@]}
 do
 if [[ $i == 0 ]];then
-l2=$var
+l4=$var
 else
-l2=$l2:$var
+l4=$l4:$var
 fi
 i=$i+1
 
 done
 
-echo  $l2 >> $table_name
+echo $l4 >> $table_name
+
 
 touch $table_name
 echo Table $table_name Created Successfuly!
-
-
-
-
-
-
 
 
 
