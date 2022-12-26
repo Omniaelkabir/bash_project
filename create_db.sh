@@ -2,7 +2,7 @@
 export LC_COLLATE=C # Terminal Case Sensitive
 shopt -s extglob #import Advanced Regex
 cd $name
-read -p "Enter Table Name to Create " database_name
+read -p "Enter DataBase Name to Create " database_name
 database_name=${database_name,,}
 database_name_number
 database_name_space
