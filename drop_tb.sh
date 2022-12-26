@@ -51,7 +51,7 @@ else
     table_name_space
 
 fi
-
+#ask for return to menus
 echo "Do you want to return to table menu or main menu?"
 cd ../..
 select opt in Table_Menu Main_Menu 
