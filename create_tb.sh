@@ -3,12 +3,14 @@
 shopt -s extglob #import Advanced Regex
 
  read -p "Enter Table Name to Create " table_name
+ table_name=${table_name,,}
              table_name_number
              table_name_space
 while [ -z $table_name  ]
      do
              echo "Empty Value Please inter vaild input"
              read -p "Enter table name again" table_name
+             table_name=${table_name,,}
              table_name_number
              table_name_space
 
@@ -18,6 +20,7 @@ while [  -e $table_name  ]
  do
          echo "File has the same name please enter diffrent name"
          read -p "Enter table name again" table_name
+         table_name=${table_name,,}
          table_name_number
          table_name_space
   done 
@@ -46,6 +49,7 @@ do
 	while [ true ]
 		do
       read -p "Enter the Column Number.$i Name:" col_name
+      col_name=${col_name,,}
 		if [ -z $col_name ];then
 			echo please enter the Name of the column.
 elif [[ $col_name == *" "* ]] || [[ $col_name == [1-9]* ]] || [[ $col_name == *['!'';''.'@\$%^\&*()+-='\'?'/''`'~:,'<''>''['']']* ]] ;then
@@ -115,7 +119,7 @@ done
                     if [[ $pk -lt $col_num ]]
                     then
           
-                              echo "The index of Your primary key column  is: " $pk >> $table_name  
+                              echo "The index of Your primary key column  is-> " $pk >> $table_name  
                               echo "---------------------------------" >> $table_name
                               echo  "Successfully add Primary Key "   
                               export pk=$pk
@@ -134,17 +138,7 @@ done
      }
 
 primary_key
-typeset -i i=0
-for var in  ${line4[@]}
-do
-if [[ $i == 0 ]];then
-l3=$var
-else
-l3=$l3:$var
-fi
-i=$i+1
-done
-echo  $l3 >> $table_name
+
 typeset -i i=0
 
 for var in  ${line3[@]}
@@ -160,9 +154,38 @@ done
 
 echo $l4 >> $table_name
 
+typeset -i i=0
+for var in  ${line4[@]}
+do
+if [[ $i == 0 ]];then
+l3=$var
+else
+l3=$l3:$var
+fi
+i=$i+1
+done
+echo  $l3 >> $table_name
 
 touch $table_name
 echo Table $table_name Created Successfuly!
+
+echo "Do you want to return to table menu or main menu?"
+cd ../..
+select opt in Table_Menu Main_Menu 
+do 
+     case $opt in 
+     "Table_Menu" )
+     chmod 775 ./connect_db.sh  
+       echo "Select Database to connect first"
+     ./connect_db.sh;;
+     "Main_Menu" )
+     chmod 775 ./project_menu.sh
+     echo "you enter main menu"
+     ./project_menu.sh;;
+     * )
+     echo "enter vaild option"
+esac
+done
 
 
 

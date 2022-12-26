@@ -1,7 +1,6 @@
 #!/bin/bash
 export LC_COLLATE=C # Terminal Case Sensitive
 shopt -s extglob #import Advanced Regex
-
 database_name_space() {   #for space in database files
 
                 case "$database_name" in  
@@ -28,7 +27,8 @@ database_name_number() {  #for snumber and Soecail characters in database files
     while [[ $database_name == [1-9]* ]] || [[ $database_name == *['!'';''.'@\$%^\&*()+-='\'?'/''`'~:,'<''>''['']']* ]];do
 
         echo "Can not start with numbers or special characters " 
-        read -p "Enter DataBase Name Again " database_name
+        read -p "Enter DataBase Name Again " database_name 
+        database_name=${database_name,,}
 done
 }
 
@@ -37,6 +37,7 @@ table_name_number(){                      #for snumber and Soecail characters in
     while [[ $table_name == [1-9]* ]] || [[ $table_name == *['!'';''.'@\$%^\&*()+-='\'?'/''`'~:,'<''>''['']']* ]];do
         echo "Can not start with numbers or special characters " 
         read -p "Enter table Name Again " table_name
+        table_name=${table_name,,}
 done
 
 }
@@ -51,6 +52,8 @@ export -f database_name_number
 #read folder to put database folder in 
 
 read -p "Enter Folder Name DB " name
+# name=${name,,}
+name=${name^^}
             case "$name" in  
      *\ * )
            
@@ -59,8 +62,9 @@ read -p "Enter Folder Name DB " name
 esac 
     while [ -z $name ]
     do
-            echo "Empty Value Please inter vaild name"
-            read name
+            echo "Empty Value Please enter vaild name" 
+            read -p "Enter Folder Name Agian " name
+            name=${name^^}
 done
     if [ -e $name ];then
             echo "Folder has the same name"
@@ -96,7 +100,7 @@ chmod 775 ./drop_db.sh
 chmod 775 ./connect_db.sh
 ./connect_db.sh;;
 "Exit")
-exit ;;
+break ;;
 * )
 echo "enter valid option"
 esac

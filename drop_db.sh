@@ -4,12 +4,14 @@ shopt -s extglob #import Advanced Regex
 #echo $name
 cd $name
 read -p "Enter DataBase Name to Drop " database_name
+database_name=${database_name,,}
 database_name_number
 database_name_space
 while [ -z $database_name ]
     do
             echo "Empty Value Please inter vaild input"
             read -p "Enter DataBase Name Again" database_name
+            database_name=${database_name,,}
             database_name_number
             database_name_space
 done
@@ -17,6 +19,7 @@ done
 while [[ -f $database_name ]];do
     echo "Can't Remove File Please Enter Right Directory"
     read -p "Enter DataBase Name Again" database_name
+    database_name=${database_name,,}
     database_name_number
     database_name_space
 done
@@ -43,5 +46,11 @@ done
     else 
     echo "Can't Find DataBase Folder"
     fi
-    
+
+echo "return main menu"
+     cd - 
+     chmod 775 ./project_menu.sh
+     echo "you enter main menu"
+     ./project_menu.sh
+
     
