@@ -1,7 +1,7 @@
 #!/bin/bash
 export LC_COLLATE=C # Terminal Case Sensitive
 shopt -s extglob #import Advanced Regex
-select opt_db in Create_DB List_DB Drop_DB Connect_DB Exit
+select opt_db in Create_DB List_DB Drop_DB Connect_DB Exit 
 do
 case $opt_db in 
 "Create_DB" )
