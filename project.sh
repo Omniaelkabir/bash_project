@@ -53,6 +53,7 @@ export -f database_name_number
 
 read -p "Enter Folder Name DB " name
 # name=${name,,}
+
 name=${name^^}
             case "$name" in  
      *\ * )
