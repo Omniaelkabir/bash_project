@@ -47,6 +47,7 @@ echo "Can you select one of these Options??"
                                 else
                                   grep -v "$value" $table_name  > temp && mv temp $table_name
                           fi
+                          fi
                                 break
                                 fi
                                 done
